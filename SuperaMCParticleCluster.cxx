@@ -465,7 +465,7 @@ namespace larcv {
           pt.x = x_pos;
           pt.y = edep.y;
           pt.z = edep.z;
-          pt.e = edep.energy;
+          pt.e = edep.energy/3.; // simch IDE e is divided by 3 to account for up to 3 duplicates (one in each wire plane.)
 
           if(_use_true_pos)
             pt.x = edep.x;
