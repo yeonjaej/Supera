@@ -493,6 +493,8 @@ namespace larcv {
           }
           */
           int track_id = abs(_useOrigTrackID ? edep.origTrackID : edep.trackID);
+	  // LARCV_WARNING() << "use orig track id ?  " << _useOrigTrackID << " , origTrackID: " << edep.origTrackID << " , trackID: "  << edep.trackID << ", track_id " << track_id << std::endl;
+
           if(track_id >= ((int)(trackid2index.size()))) {
             ++ctr_missing_trackid;
             missing_trackid.insert(track_id);
@@ -1454,6 +1456,7 @@ namespace larcv {
                mct.PdgCode() << " , " <<
       std::endl;
       if(output_id >= 0) {
+	LARCV_DEBUG() << "*****----- output_id "<<output_id << std::endl;
         auto& grp = part_grp_v[track_id];
         assert(grp.part.group_id() == larcv::kINVALID_INSTANCEID);
         /*
