@@ -501,6 +501,7 @@ namespace larcv {
           */
           int track_id = abs(_useOrigTrackID ? edep.origTrackID : edep.trackID);
           if (track_id >= ((int)(trackid2index.size()))) {
+
             ++ctr_missing_trackid;
             missing_trackid.insert(track_id);
             continue;

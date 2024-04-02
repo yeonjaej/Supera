@@ -67,10 +67,10 @@ ProcessDriver: {
 
     SuperaMCParticleCluster: {
       OutputLabel: "pcluster"
-      LArMCParticleProducer: "largeant"
+      LArMCParticleProducer: "simplemerge"
       LArMCShowerProducer: "mcreco"
       LArMCTrackProducer:  "mcreco"
-      LArMCMiniPartProducer: "largeant"
+      #LArMCMiniPartProducer: #"largeant"
       DeltaSize: 10
       #LArSimEnergyDepositProducer: "largeant TPCActive"
       LArSimEnergyDepositLiteProducer: "sedlite"
