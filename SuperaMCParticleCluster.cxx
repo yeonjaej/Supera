@@ -493,7 +493,6 @@ namespace larcv {
           }
           */
           int track_id = abs(_useOrigTrackID ? edep.origTrackID : edep.trackID);
-	  // LARCV_WARNING() << "use orig track id ?  " << _useOrigTrackID << " , origTrackID: " << edep.origTrackID << " , trackID: "  << edep.trackID << ", track_id " << track_id << std::endl;
 
           if(track_id >= ((int)(trackid2index.size()))) {
             ++ctr_missing_trackid;
