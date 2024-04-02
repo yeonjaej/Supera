@@ -6,8 +6,8 @@ ProcessDriver: {
   Verbosity:    2
   EnableFilter: true
   RandomAccess: false
-  ProcessType:  ["SuperaMCTruth","SuperaMCTruth","SuperaBBoxInteraction","SuperaMCParticleCluster","SuperaSimEnergyDeposit","SuperaSpacePoint","Tensor3DFromCluster3D","CombineTensor3D","ThresholdTensor3D","CombineTensor3D","ParticleCorrector","EmptyTensorFilter","RescaleChargeTensor3D"]
-  ProcessName:  ["MultiPartVrtx","MultiPartRain","SuperaBBoxInteraction","SuperaMCParticleCluster","SuperaSimEnergyDeposit","SuperaSpacePoint","Tensor3DFromCluster3D","CombineTensor3DGhost","ThresholdTensor3D","CombineTensor3D","ParticleCorrector","EmptyTensorFilter","RescaleChargeTensor3D"]
+  ProcessType:  ["SuperaMCTruth","SuperaBBoxInteraction","SuperaMCParticleCluster","SuperaSimEnergyDeposit","SuperaSpacePoint","Tensor3DFromCluster3D","CombineTensor3D","ThresholdTensor3D","CombineTensor3D","ParticleCorrector","EmptyTensorFilter","RescaleChargeTensor3D"]
+  ProcessName:  ["MultiPartVrtx","SuperaBBoxInteraction","SuperaMCParticleCluster","SuperaSimEnergyDeposit","SuperaSpacePoint","Tensor3DFromCluster3D","CombineTensor3DGhost","ThresholdTensor3D","CombineTensor3D","ParticleCorrector","EmptyTensorFilter","RescaleChargeTensor3D"]
 
   IOManager: {
     Verbosity:   2
@@ -53,18 +53,17 @@ ProcessDriver: {
 
     SuperaMCParticleCluster: {
       OutputLabel: "pcluster"
-      LArMCParticleProducer: "simplemerge"
+      LArMCParticleProducer: "simplemerge" # produced when merging from previous stage
       LArMCShowerProducer: "mcreco"
       LArMCTrackProducer:  "mcreco"
       DeltaSize: 10
-      #LArSimEnergyDepositProducer: "ionandscintout"
       LArSimEnergyDepositLiteProducer: "sedlite"
       Meta3DFromCluster3D: "mcst"
       Meta2DFromTensor2D:  ""
       Verbosity: 2
-      UseSimEnergyDeposit: false
-      UseSimEnergyDepositLite: true
-      UseSimEnergyDepositPoints: true
+      UseSimEnergyDeposit: false #AnalyzeSimEnergyDeposit if true, else AnalyzeFirstLastStep - default false
+      UseSimEnergyDepositLite: false 
+      UseSimEnergyDepositPoints: false
       UseOrigTrackID: true
       CryostatList: [0,0]
       TPCList: [0,1]
@@ -95,16 +94,17 @@ ProcessDriver: {
 
     MultiPartVrtx: {
       Verbosity: 2
-      LArMCTruthProducer: "generator"
+      #LArMCTruthProducer: "generator"
+      MCTruthProducers: ["generator","rain","rain2"]
       OutParticleLabel: "mpv"
       Origin: 0
     }
-    MultiPartRain: {
-      Verbosity: 2
-      LArMCTruthProducer: "rain"
-      OutParticleLabel: "mpr"
-      Origin: 0
-    }
+    # MultiPartRain: {
+    #   Verbosity: 2
+    #   LArMCTruthProducer: "rain"
+    #   OutParticleLabel: "mpr"
+    #   Origin: 0
+    # }
 
     SuperaBBoxInteraction: {
       Verbosity: 2
