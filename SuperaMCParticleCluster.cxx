@@ -1487,6 +1487,8 @@ namespace larcv {
     // Assign output IDs
     // For particles in MCShower/MCTrack collection, make sure to keep them
     std::set<unsigned int> mcs_trackid_s;
+    auto const& mcs_v = LArData<supera::LArMCShower_t>();
+    for(auto const& mcs : mcs_v) {mcs_trackid_s.insert(mcs.TrackID());}
     std::vector<int> trackid2output(trackid2index.size(), -1);
     std::vector<int> output2trackid;
     output2trackid.reserve(trackid2index.size());
