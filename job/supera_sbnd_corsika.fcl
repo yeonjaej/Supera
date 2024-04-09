@@ -69,6 +69,7 @@ ProcessDriver: {
       TPCList: [0,1]
       PlaneList: []
       SemanticPriority: [1,2,0,3,4] # 0-4 for shower track michel delta LE-scattering
+      CheckParticleValidity: false
       SuperaTrue2RecoVoxel3D: {
         UseOrigTrackID: true
         DebugMode: true
