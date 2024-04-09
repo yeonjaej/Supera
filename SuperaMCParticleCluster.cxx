@@ -2362,7 +2362,7 @@ namespace larcv {
           LARCV_CRITICAL() << "Particle index " << part_index << " holds particle w/ an ID "
                            << part.id() << std::endl
                            << part.dump() << std::endl;
-          //throw std::exception(); Temporarily disable breaking the code
+          throw std::exception();
         }
         if (part.parent_id() != larcv::kINVALID_INSTANCEID && part.parent_id() >= part_v.size()) {
           LARCV_CRITICAL() << "Particle index " << part_index
@@ -2370,14 +2370,14 @@ namespace larcv {
                            << std::endl
                            << part.dump() << std::endl
                            << part_grp_v[part.parent_track_id()].part.dump() << std::endl;
-          //throw std::exception(); Temporarily disable breaking the code
+          throw std::exception();
         }
         if (part.group_id() == larcv::kINVALID_INSTANCEID || part.group_id() >= part_v.size()) {
           LARCV_CRITICAL() << "Particle index " << part_index
                            << " holds particle w/ an invalid group ID " << part.group_id()
                            << std::endl
                            << part.dump() << std::endl;
-          //throw std::exception(); Temporarily disable breaking the code
+          throw std::exception();
         }
         if (part.parent_id() == part.id() || part.parent_id() == larcv::kINVALID_INSTANCEID)
           continue;
