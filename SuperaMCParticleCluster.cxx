@@ -631,11 +631,11 @@ namespace larcv {
 
           if (skipped2d || skipped3d) {
 
-            //LARCV_INFO() << "Skipped 2d/3d " << (skipped2d ? "1" : "0") << "/"
-            //             << (skipped3d ? "1" : "0") << " TrackID " << edep.trackID << " pos ("
-            //             << pt.x << "," << pt.y << "," << pt.z << ")"
-            //             << " ... TDC " << tick_ides.first << " => Tick " << time_pos << "... Wire "
-            //             << wid.Wire << std::endl;
+            LARCV_DEBUG() << "Skipped 2d/3d " << (skipped2d ? "1" : "0") << "/"
+                         << (skipped3d ? "1" : "0") << " TrackID " << edep.trackID << " pos ("
+                         << pt.x << "," << pt.y << "," << pt.z << ")"
+                         << " ... TDC " << tick_ides.first << " => Tick " << time_pos << "... Wire "
+                         << wid.Wire << std::endl;
           }
         }
       }
@@ -1232,7 +1232,7 @@ namespace larcv {
       int track_id = mct.TrackID();
       int output_id = trackid2output[track_id];
       int group_id = output_id;
-      LARCV_INFO() << "*****----- track ancestor before output id: " << output_id << " -- "
+      LARCV_DEBUG() << "*****----- track ancestor before output id: " << output_id << " -- "
                     << "track id " << track_id << " mother information " << mct.MotherStart().X()
                     << " , " << mct.MotherStart().Y() << " , " << mct.MotherStart().Z() << " , "
                     << " ancestor " << mct.AncestorStart().X() << " , " << mct.AncestorStart().Y()
@@ -1736,7 +1736,7 @@ namespace larcv {
       trackid2output[trackid] = group_id;
     }
 
-    LARCV_INFO() << "part_grp_v size = " << part_grp_v.size() << std::endl;
+    LARCV_DEBUG() << "part_grp_v size = " << part_grp_v.size() << std::endl;
     // for shower particles with invalid parent ID, attempt a search
     LARCV_INFO() << "Searching parents for shower particles w/ invalid parent id... ("
                  << output2trackid.size() << " particles total)" << std::endl;
@@ -1970,7 +1970,7 @@ namespace larcv {
       else
         grp.part.first_step(min_pt.x, min_pt.y, min_pt.z, grp.part.position().t());
     }
-    LARCV_INFO() << "part_grp_v.size()=" << part_grp_v.size() << std::endl;
+    LARCV_DEBUG() << "part_grp_v.size()=" << part_grp_v.size() << std::endl;
     // Next define interaction id
     larcv::Vertex invalid_vtx;
     std::vector<larcv::Vertex> int2vtx;
@@ -1980,17 +1980,9 @@ namespace larcv {
     auto const& ancestor_index_v = _mcpl.AncestorIndex();
     size_t no_ancestor_count = 0;
     double no_ancestor_energy_sum = 0.;
-
-    LARCV_INFO() << "part_grp_v.size()=" << part_grp_v.size() << std::endl;
-    LARCV_INFO() << "output2trackid.size()=" << output2trackid.size() << std::endl;
-
     for (size_t output_index = 0; output_index < output2trackid.size(); ++output_index) {
       auto const& trackid = output2trackid[output_index];
       auto const& larmcp_index = trackid2index[trackid];
-
-      LARCV_INFO() << "trackid=" << trackid  << std::endl;
-      LARCV_INFO() << "larmcp_index=" << larmcp_index  << std::endl;
-
       auto& p = part_grp_v[trackid].part;
       if (larmcp_index < 0) {
         LARCV_CRITICAL()
@@ -2000,9 +1992,6 @@ namespace larcv {
         continue;
       }
       auto const& ancestor_index = ancestor_index_v[larmcp_index];
-
-      LARCV_INFO() << "ancestor_index=" << ancestor_index  << std::endl;
-
       if (ancestor_index < 0) {
         // unknown ancestor
         no_ancestor_count++;
@@ -2024,9 +2013,6 @@ namespace larcv {
         int2vtx.push_back(apos);
       }
       p.interaction_id(aid);
-      
-      LARCV_INFO() << "Interaction counting: " << int2vtx.size() << std::endl;
-
     }
     LARCV_NORMAL() << "Saved interaction count: " << int2vtx.size() << std::endl;
     LARCV_NORMAL() << no_ancestor_count << " particles have no ancestor, summed deposit energy = "
@@ -2100,7 +2086,7 @@ namespace larcv {
       event_dedx_he->resize(output2trackid.size());
       event_dedx_le->resize(output2trackid.size());
     }
-    LARCV_INFO() << "part_grp_v.size()=" << part_grp_v.size() << std::endl;
+    LARCV_DEBUG() << "part_grp_v.size()=" << part_grp_v.size() << std::endl;
     for (size_t index = 0; index < output2trackid.size(); ++index) {
       int trackid = output2trackid[index];
       auto& grp = part_grp_v[trackid];
@@ -2108,18 +2094,17 @@ namespace larcv {
       larcv::ShapeType_t semantic = grp.shape();
       
       auto const& part = grp.part;
-      LARCV_INFO() << "Particle ID " << part.id() << " Type " << grp.type << " Valid "
-		       << grp.valid << " Track ID " << part.track_id() << " PDG "
-		       << part.pdg_code() << " " << part.creation_process() << " ... "
-		       << part.energy_init() << " MeV => " << part.energy_deposit() << " MeV "
-		       << grp.trackid_v.size() << " children " << grp.vs.size() << " voxels "
-		       << grp.vs.sum() << " MeV" << std::endl;
-      LARCV_INFO() << "  Parent " << part.parent_track_id() << " PDG "
-		       << part.parent_pdg_code() << " " << part.parent_creation_process()
-		       << " Ancestor " << part.ancestor_track_id() << " PDG "
-		       << part.ancestor_pdg_code() << " " << part.ancestor_creation_process()
-		       << std::endl;
-
+      //LARCV_INFO() << "Particle ID " << part.id() << " Type " << grp.type << " Valid "
+      //	       << grp.valid << " Track ID " << part.track_id() << " PDG "
+      //	       << part.pdg_code() << " " << part.creation_process() << " ... "
+      //	       << part.energy_init() << " MeV => " << part.energy_deposit() << " MeV "
+      //	       << grp.trackid_v.size() << " children " << grp.vs.size() << " voxels "
+      //	       << grp.vs.sum() << " MeV" << std::endl;
+      //LARCV_INFO() << "  Parent " << part.parent_track_id() << " PDG "
+      //	       << part.parent_pdg_code() << " " << part.parent_creation_process()
+      //	       << " Ancestor " << part.ancestor_track_id() << " PDG "
+      //	       << part.ancestor_pdg_code() << " " << part.ancestor_creation_process()
+      //	       << std::endl;
       if (semantic == larcv::kShapeUnknown) {
         LARCV_CRITICAL() << "Unexpected type while assigning semantic class: " << grp.type
                          << std::endl;

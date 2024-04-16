@@ -3,8 +3,8 @@ ProcessDriver: {
   Verbosity:    2
   EnableFilter: true
   RandomAccess: false
-  ProcessType:  ["SuperaMCTruth","SuperaMCTruth","SuperaBBoxInteraction","SuperaMCParticleCluster","SuperaSimEnergyDeposit","SuperaSpacePoint","SuperaSpacePoint","Tensor3DFromCluster3D","CombineTensor3D","ThresholdTensor3D","CombineTensor3D","ParticleCorrector","EmptyTensorFilter","RescaleChargeTensor3D","RescaleChargeTensor3D","SuperaOptical","SuperaCRT"]
-  ProcessName:  ["MultiPartVrtx","MultiPartRain","SuperaBBoxInteraction","SuperaMCParticleCluster","SuperaSimEnergyDeposit","SuperaSpacePointCryoE","SuperaSpacePointCryoW","Tensor3DFromCluster3D","CombineTensor3DGhost","ThresholdTensor3D","CombineTensor3D","ParticleCorrector","EmptyTensorFilter","RescaleChargeTensor3DCryoE","RescaleChargeTensor3DCryoW","SuperaOptical","SuperaCRT"]
+  ProcessType:  ["SuperaMCTruth","SuperaBBoxInteraction","SuperaMCParticleCluster","SuperaSimEnergyDeposit","SuperaSpacePoint","SuperaSpacePoint","Tensor3DFromCluster3D","CombineTensor3D","ThresholdTensor3D","CombineTensor3D","ParticleCorrector","EmptyTensorFilter","RescaleChargeTensor3D","RescaleChargeTensor3D","SuperaOptical","SuperaCRT"]
+  ProcessName:  ["MultiPartRain","SuperaBBoxInteraction","SuperaMCParticleCluster","SuperaSimEnergyDeposit","SuperaSpacePointCryoE","SuperaSpacePointCryoW","Tensor3DFromCluster3D","CombineTensor3DGhost","ThresholdTensor3D","CombineTensor3D","ParticleCorrector","EmptyTensorFilter","RescaleChargeTensor3DCryoE","RescaleChargeTensor3DCryoW","SuperaOptical","SuperaCRT"]
 
   IOManager: {
     Verbosity:   2
@@ -107,12 +107,6 @@ ProcessDriver: {
         UseOrigTrackID: true
       }
     }
-    MultiPartVrtx: {
-      Verbosity: 1
-      LArMCTruthProducer: "generator"
-      OutParticleLabel: "mpv"
-      Origin: 0
-    }
     MultiPartRain: {
       Verbosity: 1
       LArMCTruthProducer: "corsika"
@@ -121,7 +115,7 @@ ProcessDriver: {
     }
     SuperaBBoxInteraction: {
       Verbosity: 2
-      LArMCTruthProducer: "generator"
+      LArMCTruthProducer: "corsika" #"generator"
       #LArSimEnergyDepositProducer: "largeant TPCActive"
       LArSimEnergyDepositLiteProducer: "sedlite"
 			UseSEDLite: true
