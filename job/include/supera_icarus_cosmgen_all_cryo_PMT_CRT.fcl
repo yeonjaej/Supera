@@ -117,7 +117,7 @@ ProcessDriver: {
 
     SuperaBBoxInteraction: {
       Verbosity: 2
-      LArMCTruthProducer: "generator"
+      LArMCTruthProducer: "corsika" #"generator"
       #LArSimEnergyDepositProducer: "largeant TPCActive"
       LArSimEnergyDepositLiteProducer: "sedlite"
 			UseSEDLite: true
