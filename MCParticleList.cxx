@@ -55,10 +55,15 @@ namespace supera {
       int ancestor_index = -1;
       int ancestor_track_id = -1;
       while (1) {
+	//std::cout << "UPDATE:: (size_t)(parent_track_id) " << (size_t)(parent_track_id) << std::endl;
+	//std::cout << "UPDATE:: _trackid2index.size() " << _trackid2index.size() << std::endl;
         if ((size_t)(parent_track_id) >= _trackid2index.size()) break;
+	//std::cout << "UPDATE:: parent_track_id " << parent_track_id << std::endl;
+	//std::cout << "UPDATE:: subject_track_id " << subject_track_id << std::endl;
         if (parent_track_id == 0 || parent_track_id == subject_track_id) {
           ancestor_index = _trackid2index[subject_track_id];
           ancestor_track_id = subject_track_id;
+	  //std::cout << "UPDATE:: ancestor_index" << ancestor_index << std::endl;
           break;
         }
         auto const& parent_index = _trackid2index[parent_track_id];
