@@ -2092,19 +2092,6 @@ namespace larcv {
       auto& grp = part_grp_v[trackid];
       // set semantic type
       larcv::ShapeType_t semantic = grp.shape();
-      
-      auto const& part = grp.part;
-      //LARCV_INFO() << "Particle ID " << part.id() << " Type " << grp.type << " Valid "
-      //	       << grp.valid << " Track ID " << part.track_id() << " PDG "
-      //	       << part.pdg_code() << " " << part.creation_process() << " ... "
-      //	       << part.energy_init() << " MeV => " << part.energy_deposit() << " MeV "
-      //	       << grp.trackid_v.size() << " children " << grp.vs.size() << " voxels "
-      //	       << grp.vs.sum() << " MeV" << std::endl;
-      //LARCV_INFO() << "  Parent " << part.parent_track_id() << " PDG "
-      //	       << part.parent_pdg_code() << " " << part.parent_creation_process()
-      //	       << " Ancestor " << part.ancestor_track_id() << " PDG "
-      //	       << part.ancestor_pdg_code() << " " << part.ancestor_creation_process()
-      //	       << std::endl;
       if (semantic == larcv::kShapeUnknown) {
         LARCV_CRITICAL() << "Unexpected type while assigning semantic class: " << grp.type
                          << std::endl;
