@@ -631,7 +631,7 @@ namespace larcv {
 
           if (skipped2d || skipped3d) {
 
-            LARCV_INFO() << "Skipped 2d/3d " << (skipped2d ? "1" : "0") << "/"
+            LARCV_DEBUG() << "Skipped 2d/3d " << (skipped2d ? "1" : "0") << "/"
                          << (skipped3d ? "1" : "0") << " TrackID " << edep.trackID << " pos ("
                          << pt.x << "," << pt.y << "," << pt.z << ")"
                          << " ... TDC " << tick_ides.first << " => Tick " << time_pos << "... Wire "
