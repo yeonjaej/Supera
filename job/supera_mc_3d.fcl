@@ -11,8 +11,8 @@ ProcessDriver: {
   #ProcessName:  ["MultiPartVrtx","SuperaBBoxInteraction","SuperaMCParticleCluster","MaskByIndex3D","Tensor3DFromCluster3D","ParticleCorrector","MaskedParticleCorrector","RemoveDetectorInfo"]
   #ProcessType:  ["SuperaMCTruth","SuperaMCTruth","SuperaBBoxInteraction","SuperaMCParticleCluster","Tensor3DFromCluster3D","ParticleCorrector","RemoveDetectorInfo"]
   #ProcessName:  ["MultiPartVrtx","MultiPartRain","SuperaBBoxInteraction","SuperaMCParticleCluster","Tensor3DFromCluster3D","ParticleCorrector","RemoveDetectorInfo"]
-  ProcessType:  ["SuperaMCTruth","SuperaMCTruth","SuperaBBoxInteraction","SuperaMCParticleCluster","Tensor3DFromCluster3D","ParticleCorrector","RemoveDetectorInfo"]
-  ProcessName:  ["MultiPartVrtx","MultiPartRain","SuperaBBoxInteraction","SuperaMCParticleCluster","Tensor3DFromCluster3D","ParticleCorrector","RemoveDetectorInfo"]
+  ProcessType:  ["SuperaMCTruth","SuperaMCTruth","SuperaBBoxInteraction","SuperaMCParticleCluster","SuperaSimEnergyDeposit","Tensor3DFromCluster3D","ParticleCorrector","RemoveDetectorInfo"]
+  ProcessName:  ["MultiPartVrtx","MultiPartRain","SuperaBBoxInteraction","SuperaMCParticleCluster","SuperaSimEnergyDeposit","Tensor3DFromCluster3D","ParticleCorrector","RemoveDetectorInfo"]
 
   IOManager: {
     Verbosity:   2
@@ -130,14 +130,14 @@ ProcessDriver: {
       }
     }
     SuperaSimEnergyDeposit: {
-      Verbosity: 2
+      Verbosity: 1
       Profile: true
       LArSimEnergyDepositProducer: "largeant TPCActive"
       LArMCShowerProducer: "mcreco"
       ParticleProducer: "pcluster"
       OutCluster3DLabel: "sed"
       StoreLength: true
-      StoreCharge: false
+      StoreCharge: true #false
       StorePhoton: false
       StoreDiffTime: false
       StoreAbsTime: true
