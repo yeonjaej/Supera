@@ -86,6 +86,7 @@ ProcessDriver: {
       PlaneList: []
       #SemanticPriority: [2,1,0,3,4] # 0-4 for shower track michel delta LE-scattering
       SemanticPriority: [1,2,0,3,4] # 0-4 for shower track michel delta LE-scattering
+      CheckParticleValidity: false #set false, but this needs to be checked later
 
       SuperaTrue2RecoVoxel3D: {
         DebugMode: false
