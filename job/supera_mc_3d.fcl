@@ -56,12 +56,12 @@ ProcessDriver: {
       LArMCTrackProducer:  "mcreco"
       #MaskedTrueTensor3D: "masked_true"
       #MaskedTrue2RecoCluster3D: "masked_true2reco"
-      TouchDistance: 3
-      DeltaSize: 60
-      IonizationSize: 20 #5
-      ComptonSize: 60 #10
-      EnergyDepositThreshold: 0.001 #0.01
-      LArSimEnergyDepositProducer: "largeant TPCActive"
+      #TouchDistance: 3
+      #DeltaSize: 60
+      #IonizationSize: 20 #5
+      #ComptonSize: 60 #10
+      EnergyDepositThreshold: 0.01 #0.001
+      LArSimEnergyDepositProducer: "ionization" #"largeant TPCActive"
       LArSimChProducer: ""
       #LArSimEnergyDepositProducer: ""
       #LArSimChProducer: "largeant"
@@ -90,12 +90,12 @@ ProcessDriver: {
       Verbosity: 2
       Profile: true
       LArMCTruthProducer: "generator"
-      LArSimEnergyDepositProducer: "largeant TPCActive"
+      LArSimEnergyDepositProducer: "ionization" #"largeant TPCActive"
       Origin: 0
       Cluster3DLabels: ["mcst","pcluster","sed"]
       Tensor3DLabels:  ["reco","pcluster_index"]
       BBoxSize:   [230.4,230.4,230.4]
-      VoxelSize:  [0.01,0.01,0.01]
+      VoxelSize:  [0.3, 0.3, 0.3] #[0.1, 0.1, 0.1] #[0.01,0.01,0.01]
       BBoxBottom: [-365.0,-138.65,-500.]
       #BBoxSize: [227.0208,340.5312,340.5312]
       #VoxelSize: [0.4434,0.4434,0.4434]
@@ -132,7 +132,7 @@ ProcessDriver: {
     SuperaSimEnergyDeposit: {
       Verbosity: 1
       Profile: true
-      LArSimEnergyDepositProducer: "largeant TPCActive"
+      LArSimEnergyDepositProducer: "ionization" #"largeant TPCActive"
       LArMCShowerProducer: "mcreco"
       ParticleProducer: "pcluster"
       OutCluster3DLabel: "sed"

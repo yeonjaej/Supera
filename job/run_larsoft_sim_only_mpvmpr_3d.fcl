@@ -65,13 +65,13 @@ physics:
  #simulate: [ rns, generator, largeant, mcreco, daq0, daq1, rawdigitfilter, decon1droi, gaushit, gaushitsel, cluster3d]
  #simulate: [rns, generator, rain, largeant, mcreco]
  simulate: [rns, generator, rain, largeant, ionization, mcreco]
- analyze: [ supera ]
+ #analyze: [ supera ]
  out_stream: [ out1   ]
   
  trigger_paths: [simulate]
- end_paths:     [analyze,out_stream]
+ #end_paths:     [analyze,out_stream]
  #end_paths:     [analyze]
-
+ end_paths: [out_stream]
 }
 
 services.LArG4Parameters.FillSimEnergyDeposits: true
