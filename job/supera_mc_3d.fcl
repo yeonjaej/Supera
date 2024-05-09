@@ -96,11 +96,12 @@ ProcessDriver: {
       Tensor3DLabels:  ["reco","pcluster_index"]
       BBoxSize:   [230.4,230.4,230.4]
       VoxelSize:  [0.3, 0.3, 0.3] #[0.1, 0.1, 0.1] #[0.01,0.01,0.01]
-      BBoxBottom: [-365.0,-138.65,-500.]
+      BBoxBottom: [-440.342,-92.2731,-171.762]
+      #BBoxBottom: [-365.0,-138.65,-500.]
       #BBoxSize: [227.0208,340.5312,340.5312]
       #VoxelSize: [0.4434,0.4434,0.4434]
       #BBoxBottom: [-333.7254,-193.7156,-170.2656]
-      #UseFixedBBox: true
+      UseFixedBBox: true
       CryostatList: [0,0]
       TPCList: [0,1]
     }

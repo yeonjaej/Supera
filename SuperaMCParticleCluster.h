@@ -49,7 +49,8 @@ namespace larcv {
 
     larcv::Particle MakeParticle(const supera::LArMCParticle_t& larmcp);
 
-    bool IsTouching(const Voxel3DMeta& meta, const VoxelSet& vs1, const VoxelSet& vs2) const;
+    bool IsTouching(const Voxel3DMeta& meta, const VoxelSet& vs1, const VoxelSet& vs2, bool verbose=false) const;
+    larcv::VoxelSet SliceOverlap(const Voxel3DMeta& meta,const VoxelSet& vs1,const VoxelSet& vs2, bool verbose) const;
     bool IsTouching2D(const ImageMeta& meta, const VoxelSet& vs1, const VoxelSet& vs2) const;
 
     //std::map<int, supera::ParticleGroup> CreateParticleGroups();

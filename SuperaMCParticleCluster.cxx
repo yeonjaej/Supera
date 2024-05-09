@@ -250,6 +250,7 @@ namespace larcv {
     std::map<int, supera::ParticleGroup>& part_grp_v,
     larcv::IOManager& mgr)
   {
+
     //std::set<size_t> ctr_a, ctr_b;
     auto const& sedep_v = LArData<sed_type>();
     auto const& trackid2index = _mcpl.TrackIdToIndex();
@@ -263,10 +264,26 @@ namespace larcv {
     size_t bad_sedep_counter2 = 0;
     size_t bad_sedep_counter3 = 0;
     std::set<size_t> missing_trackid;
+
+    std::set<size_t> criminals;
+
     for (size_t sedep_idx = 0; sedep_idx < sedep_v.size(); ++sedep_idx) {
       auto const& sedep = sedep_v.at(sedep_idx);
 
       VoxelID_t vox_id = meta.id(sedep.X(), sedep.Y(), sedep.Z());
+      if (vox_id == 213374765 || vox_id == 212784941){
+	std::cout << __LINE__ << " touching vox_id: " << vox_id << ", track_id : " << sedep.TrackID() << std::endl;
+	criminals.insert(sedep.TrackID());
+      }
+      if (vox_id == 259917898){
+	std::cout << __LINE__ << " start vox_id: " << vox_id << ", track_id : " << sedep.TrackID() << std::endl;
+	criminals.insert(sedep.TrackID());
+      }
+      if (vox_id == 306013277){
+	std::cout << __LINE__ << " far vox_id: " << vox_id << ", track_id : " << sedep.TrackID() << std::endl;
+	criminals.insert(sedep.TrackID());
+      }
+
       int track_id = abs(sedep.TrackID());
       if (vox_id == larcv::kINVALID_VOXELID ||
           !_world_bounds.contains(sedep.X(), sedep.Y(), sedep.Z())) {
@@ -353,6 +370,10 @@ namespace larcv {
         }
       }
     }
+    for(auto const& tid : criminals) {
+      auto const& grp = part_grp_v[tid];
+      std::cout<<"TID "<<tid<<" PDG" <<grp.part.pdg_code()<<std::endl;
+    }
     if (bad_sedep_counter) {
       LARCV_WARNING() << bad_sedep_counter << " / " << sedep_v.size() << " SimEnergyDeposits "
                       << "(from " << missing_trackid.size()
@@ -362,6 +383,7 @@ namespace larcv {
       for (auto trackid : missing_trackid)
         std::cout << trackid << std::endl;
     }
+    
     //std::cout<<(mgr.get_data<larcv::EventSparseTensor3D>("masked_true")).size()<<" : "<<ctr_a.size()<<" : "<<ctr_b.size()<<std::endl;
   }
 
@@ -1121,7 +1143,8 @@ namespace larcv {
       merge_ctr = 0;
       for (auto& grp : part_grp_v) {
         if (!grp.second.valid || grp.second.vs.size() < 1 ||
-            grp.second.shape() != larcv::kShapeLEScatter)
+            grp.second.shape() != larcv::kShapeLEScatter  ||
+	    grp.second.type == supera::kNeutron)
           continue;
         // Find all direct shower-type or other LEScatter type parent
         //auto const& parents = this->ParentShowerTrackIDs(grp.second.part.track_id(), part_grp_v, true);
@@ -1134,10 +1157,16 @@ namespace larcv {
         for(auto const& parent_trackid : parents) std::cout<<" "<<parent_trackid;
         std::cout<<std::endl;
         */
+	bool verbose = false;
+	if(grp.second.vs.find(306013277).id() != larcv::kINVALID_VOXELID) {
+	  verbose=true;
+	}
         for (auto const& parent_trackid : parents) {
           auto& parent = part_grp_v[parent_trackid];
           if (!parent.valid || parent.vs.size() < 1) continue;
-          if (this->IsTouching(meta, grp.second.vs, parent.vs)) {
+	  //auto const overlap = this->SliceOverlap(meta,grp.second.vs,parent.vs,verbose);
+          //if (overlap.size()>0) {
+	  if (this->IsTouching(meta,grp.second.vs,parent.vs,verbose)) {
             parent.Merge(grp.second);
             merge_ctr++;
             break;
@@ -2675,7 +2704,7 @@ namespace larcv {
 
   bool SuperaMCParticleCluster::IsTouching(const Voxel3DMeta& meta,
                                            const VoxelSet& vs1,
-                                           const VoxelSet& vs2) const
+                                           const VoxelSet& vs2, bool verbose) const
   {
 
     bool touching = false;
@@ -2702,6 +2731,9 @@ namespace larcv {
         touching =
           diffx <= _touch_threshold && diffy <= _touch_threshold && diffz <= _touch_threshold;
         if (touching) {
+	  if (verbose){
+	    std::cout<<"Touching ("<<ix1<<","<<iy1<<","<<iz1<<") ("<<ix2<<","<<iy2<<","<<iz2<<")"<<std::endl;	  
+	  }
           //std::cout<<"Touching ("<<ix1<<","<<iy1<<","<<iz1<<") ("<<ix2<<","<<iy2<<","<<iz2<<")"<<std::endl;
           break;
         }
@@ -2710,6 +2742,46 @@ namespace larcv {
     }
 
     return touching;
+  }
+
+  larcv::VoxelSet SuperaMCParticleCluster::SliceOverlap(const Voxel3DMeta& meta,
+							const VoxelSet& vs1,
+							const VoxelSet& vs2, bool verbose) const
+  {
+
+    larcv::VoxelSet overlap;
+    size_t ix1, iy1, iz1;
+    size_t ix2, iy2, iz2;
+    size_t diffx, diffy, diffz;
+
+    for (auto const& vox1 : vs1.as_vector()) {
+      meta.id_to_xyz_index(vox1.id(), ix1, iy1, iz1);
+      for (auto const& vox2 : vs2.as_vector()) {
+        meta.id_to_xyz_index(vox2.id(), ix2, iy2, iz2);
+        if (ix1 > ix2)
+          diffx = ix1 - ix2;
+        else
+          diffx = ix2 - ix1;
+        if (iy1 > iy2)
+          diffy = iy1 - iy2;
+        else
+          diffy = iy2 - iy1;
+        if (iz1 > iz2)
+          diffz = iz1 - iz2;
+        else
+          diffz = iz2 - iz2;
+          
+	if (diffx <= _touch_threshold && diffy <= _touch_threshold && diffz <= _touch_threshold) {
+	  if (verbose){
+	    std::cout<<"Touching ("<<ix1<<","<<iy1<<","<<iz1<<") ("<<ix2<<","<<iy2<<","<<iz2<<")"<<std::endl;
+	  }
+	  overlap.emplace(vox1.id(),0.,false);
+	  overlap.emplace(vox2.id(),0.,false);
+        }
+      }
+    }
+
+    return overlap;
   }
 
   bool SuperaMCParticleCluster::IsTouching2D(const ImageMeta& meta,

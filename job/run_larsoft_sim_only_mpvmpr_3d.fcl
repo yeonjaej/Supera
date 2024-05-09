@@ -77,7 +77,7 @@ physics:
 services.LArG4Parameters.FillSimEnergyDeposits: true
 services.LArG4Parameters.KeepEMShowerDaughters: true
 #services.LArG4Parameters.NoElectronPropagation: true
-services.LArG4Parameters.ParticleKineticEnergyCut: 0.0005
+services.LArG4Parameters.ParticleKineticEnergyCut: 0.0000
 #services.LArG4Parameters.DisableWireplanes: true
 #services.LArG4Parameters.EnabledPhysics: ["Em","SynchrotronAndGN","Ion","Stopping","FastOptical"]
 #services.LArG4Parameters.EnabledPhysics: ["Em","SynchrotronAndGN","Ion","Hadron","Decay","HadronElastic","Stopping"]
