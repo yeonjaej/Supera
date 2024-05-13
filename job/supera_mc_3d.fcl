@@ -101,7 +101,7 @@ ProcessDriver: {
       #BBoxSize: [227.0208,340.5312,340.5312]
       #VoxelSize: [0.4434,0.4434,0.4434]
       #BBoxBottom: [-333.7254,-193.7156,-170.2656]
-      UseFixedBBox: true
+      #UseFixedBBox: true
       CryostatList: [0,0]
       TPCList: [0,1]
     }

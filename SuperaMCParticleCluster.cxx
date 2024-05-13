@@ -1143,8 +1143,8 @@ namespace larcv {
       merge_ctr = 0;
       for (auto& grp : part_grp_v) {
         if (!grp.second.valid || grp.second.vs.size() < 1 ||
-            grp.second.shape() != larcv::kShapeLEScatter  ||
-	    grp.second.type == supera::kNeutron)
+            grp.second.shape() != larcv::kShapeLEScatter ) ||
+	  grp.second.type == supera::kNeutron)
           continue;
         // Find all direct shower-type or other LEScatter type parent
         //auto const& parents = this->ParentShowerTrackIDs(grp.second.part.track_id(), part_grp_v, true);
@@ -1157,20 +1157,19 @@ namespace larcv {
         for(auto const& parent_trackid : parents) std::cout<<" "<<parent_trackid;
         std::cout<<std::endl;
         */
-	bool verbose = false;
+	/*bool verbose = false;
 	if(grp.second.vs.find(306013277).id() != larcv::kINVALID_VOXELID) {
 	  verbose=true;
-	}
+	}*/
         for (auto const& parent_trackid : parents) {
           auto& parent = part_grp_v[parent_trackid];
           if (!parent.valid || parent.vs.size() < 1) continue;
-	  //auto const overlap = this->SliceOverlap(meta,grp.second.vs,parent.vs,verbose);
-          //if (overlap.size()>0) {
+	  
 	  if (this->IsTouching(meta,grp.second.vs,parent.vs,verbose)) {
             parent.Merge(grp.second);
             merge_ctr++;
             break;
-          }
+	  }
         }
       }
     }
