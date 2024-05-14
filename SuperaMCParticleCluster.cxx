@@ -1143,7 +1143,7 @@ namespace larcv {
       merge_ctr = 0;
       for (auto& grp : part_grp_v) {
         if (!grp.second.valid || grp.second.vs.size() < 1 ||
-            grp.second.shape() != larcv::kShapeLEScatter ) ||
+            grp.second.shape() != larcv::kShapeLEScatter ||
 	  grp.second.type == supera::kNeutron)
           continue;
         // Find all direct shower-type or other LEScatter type parent
@@ -1161,6 +1161,7 @@ namespace larcv {
 	if(grp.second.vs.find(306013277).id() != larcv::kINVALID_VOXELID) {
 	  verbose=true;
 	}*/
+	bool verbose = false;
         for (auto const& parent_trackid : parents) {
           auto& parent = part_grp_v[parent_trackid];
           if (!parent.valid || parent.vs.size() < 1) continue;

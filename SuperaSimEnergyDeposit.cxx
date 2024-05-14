@@ -325,8 +325,8 @@ namespace larcv {
 	  float dedx = vox_de.value() / vox_dx.value();
 	  cluster_dedx.emplace(vox_de.id(),dedx,true);
 	}
-      }
-      */
+	}*/
+      
     }
 
     // report
